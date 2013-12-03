@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">StripeExample</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="address_line_1">Address line 1</string>
+    <string name="address_line_2">Address line 2</string>
+    <string name="city">City</string>
+    <string name="state">State</string>
+    <string name="zip_code">Zip Code</string>
+    <string name="country">Country</string>
+    <string name="proceed_to_payment">Proceed To Payment</string>
+    <string name="shipping_address">"Shipping Address : "</string>
+    <string name="enter_card_details">Enter Card Details :</string>
+    <string name="expiry_date">"Expiry Date: "</string>
+    <string name="cvc_number">CVC Number</string>
+    <string name="make_payment">Make Payment</string>
+
+</resources>
