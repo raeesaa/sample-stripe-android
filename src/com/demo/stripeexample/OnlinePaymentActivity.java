@@ -18,6 +18,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -37,8 +38,9 @@ public class OnlinePaymentActivity extends Activity implements OnClickListener {
 
 	private ProgressDialog progress_creating_token;
 
-	private static final String PUBLISHABLE_KEY = "YOUR_TEST_OR_LIVE_STRIPE_PUBLICATION_KEY";
-
+	private static final String PUBLISHABLE_KEY = "YOUR_TEST_OR_LIVE_STRIPE_PUBLICABLE_KEY";
+	private static final String API_KEY = "YOUR_TEST_OR_LIVE_STRIPE_SECRET_KEY";
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -78,7 +80,7 @@ public class OnlinePaymentActivity extends Activity implements OnClickListener {
 
 				try {
 					Stripe stripe = new Stripe(PUBLISHABLE_KEY);
-					
+
 					// Create Card instance containing customer's payment
 					// information obtained
 					Card card = new Card(cardNumber, cardExpMonth, cardExpYear,
@@ -102,8 +104,9 @@ public class OnlinePaymentActivity extends Activity implements OnClickListener {
 								stopProgress();
 								showAlert("Validation Error",
 										error.getLocalizedMessage());
-								
-								Log.e("Error in creating token." , error.toString());
+
+								Log.e("Error in creating token.",
+										error.toString());
 							}
 						});
 					} else {
@@ -126,19 +129,28 @@ public class OnlinePaymentActivity extends Activity implements OnClickListener {
 	}
 
 	public void chargeCustomer(Token token) {
-		Map<String, Object> chargeParams = new HashMap<String, Object>();
+		final Map<String, Object> chargeParams = new HashMap<String, Object>();
 		chargeParams.put("amount", 400);
 		chargeParams.put("currency", "usd");
 		chargeParams.put("card", token.getId()); // obtained with Stripe.js
-		
-		try {
-			Charge charge = Charge.create(chargeParams);
-			
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			showAlert("Exception while charging the card!", e.getLocalizedMessage());
-		}
+
+		new AsyncTask<Void, Void, Void>() {
+
+			@Override
+			protected Void doInBackground(Void... params) {
+				try {
+					com.stripe.Stripe.apiKey = API_KEY;
+					Charge charge = Charge.create(chargeParams);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					showAlert("Exception while charging the card!",
+							e.getLocalizedMessage());
+				}
+				return null;
+			}
+
+		};
 
 	}
 
