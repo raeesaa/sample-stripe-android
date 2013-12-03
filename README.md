@@ -2,9 +2,11 @@
 
 The sample code in this repository corresponds to Stripe API for android.
 
+
+
 ## Stripe For Android Installation:
 
-Stripe for android can be installed by following instructions given in official stripe site here:[Stripe Android Installation](https://stripe.com/docs/mobile/android#installation).
+Stripe for android can be installed by following instructions given in official stripe site here: [Stripe Android Installation](https://stripe.com/docs/mobile/android#installation).
 
 
 
