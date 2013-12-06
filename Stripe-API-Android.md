@@ -161,27 +161,27 @@ Full API reference for `Charge` can be found here : [API Charges](https://stripe
 
 Charge object has many attributes. These attributes are explained in detail in API document. Some of the important attributes are:
 
-1. id : String
+1. id : String<br/>
 Unique ID that is assigned to every charge.
     
-2. amount : positive integer or zero
-required
+2. amount : positive integer or zero<br/>
+required<br/>
 Amount to be charged or refunded.
     
-3. currency : String
-required
+3. currency : String<br/>
+required<br/>
 Three letter ISO currency code representing currency in which charge is to be made.
     
-4. captured : boolean
-optional(default : true)
+4. captured : boolean<br/>
+optional(default : true)<br/>
 Represents if charge is to be captured immediately or later (default is **true**).
     
-5. customer : String
-optional, either customer or card attribute is required
+5. customer : String<br/>
+optional, either customer or card attribute is required<br/>
 ID of customer to be charged.
     
-6. card : String
-optional, either customer or card attribute is required
+6. card : String<br/>
+optional, either customer or card attribute is required<br/>
 ID of created card token
 
 ##### Capturing Charge Immediately:
