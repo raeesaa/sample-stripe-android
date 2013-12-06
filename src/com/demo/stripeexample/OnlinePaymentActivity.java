@@ -38,8 +38,8 @@ public class OnlinePaymentActivity extends Activity implements OnClickListener {
 
 	private ProgressDialog progress_creating_token;
 
-	private static final String PUBLISHABLE_KEY = "YOUR_TEST_OR_LIVE_STRIPE_PUBLICABLE_KEY";
-	private static final String API_KEY = "YOUR_TEST_OR_LIVE_STRIPE_SECRET_KEY";
+	private static final String PUBLISHABLE_KEY = "YOUR_TEST_PUBLISHABLE_KEY";
+	private static final String API_KEY = "YOUR_TEST_SECRET_KEY";
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -95,6 +95,8 @@ public class OnlinePaymentActivity extends Activity implements OnClickListener {
 							@Override
 							public void onSuccess(Token token) {
 								stopProgress();
+								
+								Toast.makeText(OnlinePaymentActivity.this, "Token created successfully!", Toast.LENGTH_SHORT).show();
 								chargeCustomer(token);
 
 							}
@@ -136,11 +138,17 @@ public class OnlinePaymentActivity extends Activity implements OnClickListener {
 
 		new AsyncTask<Void, Void, Void>() {
 
+			Charge charge;
+			
 			@Override
 			protected Void doInBackground(Void... params) {
 				try {
 					com.stripe.Stripe.apiKey = API_KEY;
-					Charge charge = Charge.create(chargeParams);
+					charge = Charge.create(chargeParams);
+					
+					Log.i("IsCharged", charge.getCreated().toString());
+					
+					
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -149,8 +157,13 @@ public class OnlinePaymentActivity extends Activity implements OnClickListener {
 				}
 				return null;
 			}
+			
+			protected void onPostExecute(Void result) {
+				
+				Toast.makeText(OnlinePaymentActivity.this, "Card Charged : " + charge.getCreated() + "\nPaid : " +charge.getPaid(), Toast.LENGTH_LONG).show();
+			};
 
-		};
+		}.execute();
 
 	}
 
